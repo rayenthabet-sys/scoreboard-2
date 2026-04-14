@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PACTE — Classement en Direct</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #060910;
+    --surface: #0e1421;
+    --border: #1a2640;
+    --accent: #3dffc0;
+    --accent2: #7b61ff;
+    --gold: #f5c842;
+    --silver: #aab4c8;
+    --bronze: #e08060;
+    --text: #e8edf5;
+    --muted: #6b7a99;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(61,255,192,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 90% 100%, rgba(123,97,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanning line effect */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scan 4s linear infinite;
+    opacity: 0.3;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  /* Top bar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    animation: fadeDown 0.5s ease both;
+  }
+
+  .logo-area { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .event-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: rgba(61,255,192,0.08);
+    border: 1px solid rgba(61,255,192,0.2);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.85rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-value.accent { color: var(--accent); }
+
+  /* Leaderboard table */
+  .lb-header {
+    display: grid;
+    grid-template-columns: 48px 1fr 110px 110px;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 560px) {
+    .lb-header { grid-template-columns: 36px 1fr 80px; }
+    .lb-header .col-school { display: none; }
+    .entry { grid-template-columns: 36px 1fr 80px !important; }
+    .entry .entry-school { display: none; }
+  }
+
+  .entries { display: flex; flex-direction: column; gap: 0.6rem; animation: fadeUp 0.5s 0.2s ease both; }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 48px 1fr 110px 110px;
+    gap: 1rem;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.85rem;
+    padding: 1rem;
+    transition: border-color 0.2s, transform 0.15s;
+    cursor: default;
+  }
+
+  .entry:hover {
+    border-color: rgba(61,255,192,0.2);
+    transform: translateX(4px);
+  }
+
+  .entry.rank-1 { border-color: rgba(245,200,66,0.4); background: rgba(245,200,66,0.04); }
+  .entry.rank-2 { border-color: rgba(170,180,200,0.4); background: rgba(170,180,200,0.03); }
+  .entry.rank-3 { border-color: rgba(224,128,96,0.4); background: rgba(224,128,96,0.03); }
+
+  .entry-rank {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--muted);
+  }
+
+  .rank-1 .entry-rank { color: var(--gold); }
+  .rank-2 .entry-rank { color: var(--silver); }
+  .rank-3 .entry-rank { color: var(--bronze); }
+
+  .entry-body {}
+
+  .entry-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .entry-idea {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .entry-themes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+
+  .tag {
+    font-size: 0.6rem;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(123,97,255,0.15);
+    border: 1px solid rgba(123,97,255,0.3);
+    color: #c4b5fd;
+  }
+
+  .entry-school {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .entry-score {
+    text-align: right;
+  }
+
+  .score-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--muted);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+  .empty-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+  /* Footer */
+  .footer {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .submit-link {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .submit-link:hover { opacity: 0.7; }
+
+  /* Refresh indicator */
+  #refreshProgress {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+
+  #refreshFill {
+    height: 100%;
+    background: var(--accent2);
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* Entry animation */
+  .entry { animation: slideIn 0.4s ease both; }
+
+  @keyframes scan {
+    from { transform: translateY(0); }
+    to   { transform: translateY(100vh); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="topbar">
+    <div class="logo-area">
+      <span class="event-tag">PACTE · IPEST × SUP'COM × ISSHT · 2026</span>
+      <h1>Classement Live</h1>
+    </div>
+    <div class="live-indicator">
+      <div class="live-dot"></div>
+      LIVE — actualisation auto
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat-card">
+      <div class="stat-label">Idées soumises</div>
+      <div class="stat-value" id="statTotal">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Score moyen</div>
+      <div class="stat-value accent" id="statAvg">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Score le plus haut</div>
+      <div class="stat-value" id="statTop">—</div>
+    </div>
+  </div>
+
+  <div id="refreshProgress"><div id="refreshFill"></div></div>
+
+  <div class="lb-header">
+    <div>#</div>
+    <div>Participant & Idée</div>
+    <div class="col-school" style="text-align:center">École</div>
+    <div style="text-align:right">Score</div>
+  </div>
+
+  <div class="entries" id="entries">
+    <div class="empty">
+      <div class="empty-icon">⏳</div>
+      <div class="empty-title">Chargement…</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span id="lastUpdated">—</span>
+    <a href="/" class="submit-link">↗ Soumettre une idée</a>
+  </div>
+
+</div>
+
+<script>
+  const API_BASE = '';
+  const REFRESH_INTERVAL = 15000; // 15s
+  let refreshTimer = null;
+  let progressTimer = null;
+  let progressStart = null;
+
+  function rankEmoji(r) {
+    if (r === 1) return '🥇';
+    if (r === 2) return '🥈';
+    if (r === 3) return '🥉';
+    return r;
+  }
+
+  function startProgressBar() {
+    if (progressTimer) clearInterval(progressTimer);
+    progressStart = Date.now();
+    const fill = document.getElementById('refreshFill');
+    fill.style.width = '0%';
+    progressTimer = setInterval(() => {
+      const elapsed = Date.now() - progressStart;
+      const pct = Math.min((elapsed / REFRESH_INTERVAL) * 100, 100);
+      fill.style.width = pct + '%';
+    }, 100);
+  }
+
+  async function fetchLeaderboard() {
+    try {
+      const res = await fetch(API_BASE + '/leaderboard?limit=20');
+      if (!res.ok) throw new Error('Erreur réseau');
+      return await res.json();
+    } catch (e) {
+      console.error('Leaderboard fetch error:', e);
+      return null;
+    }
+  }
+
+  function renderEntries(data) {
+    const container = document.getElementById('entries');
+
+    if (!data || data.length === 0) {
+      container.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">💡</div>
+          <div class="empty-title">Aucune idée validée pour l'instant</div>
+          <p style="font-size:0.85rem;margin-top:0.5rem">Soyez le premier à soumettre !</p>
+        </div>`;
+      document.getElementById('statTotal').textContent = '0';
+      document.getElementById('statAvg').textContent = '—';
+      document.getElementById('statTop').textContent = '—';
+      return;
+    }
+
+    // Stats
+    const scores = data.map(e => e.final_score);
+    const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+    document.getElementById('statTotal').textContent = data.length;
+    document.getElementById('statAvg').textContent = avg.toFixed(1);
+    document.getElementById('statTop').textContent = Math.max(...scores).toFixed(1);
+
+    // Entries
+    container.innerHTML = data.map((entry, i) => {
+      const rankClass = i < 3 ? `rank-${i + 1}` : '';
+      const themes = (entry.themes || []).slice(0, 3).map(t =>
+        `<span class="tag">${t}</span>`
+      ).join('');
+      const ideaShort = entry.idea_text.length > 120
+        ? entry.idea_text.slice(0, 120) + '…'
+        : entry.idea_text;
+
+      return `
+        <div class="entry ${rankClass}" style="animation-delay:${i * 0.05}s">
+          <div class="entry-rank">${rankEmoji(entry.rank)}</div>
+          <div class="entry-body">
+            <div class="entry-name">${entry.participant_name}</div>
+            <div class="entry-idea">${ideaShort}</div>
+            ${themes ? `<div class="entry-themes">${themes}</div>` : ''}
+          </div>
+          <div class="entry-school">${entry.school}</div>
+          <div class="entry-score">
+            <div class="score-num">${entry.final_score.toFixed(1)}</div>
+            <div class="score-label">/ 100</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  async function refresh() {
+    const data = await fetchLeaderboard();
+    if (data !== null) {
+      renderEntries(data);
+      const now = new Date().toLocaleTimeString('fr-FR');
+      document.getElementById('lastUpdated').textContent = `Mis à jour à ${now}`;
+    }
+    startProgressBar();
+  }
+
+  // Initial load then poll
+  refresh();
+  refreshTimer = setInterval(refresh, REFRESH_INTERVAL);
+</script>
+</body>
+</html>
