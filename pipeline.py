@@ -4,9 +4,9 @@ Wires: Gatekeeper (Groq) → Analyser (Gemini) → Validator (Tavily) → Scorer
 """
 
 from models import IdeaSubmission, PipelineResult
-from agents.gatekeeper import run_gatekeeper
-from agents.analyser import run_analyser
-from agents.validator import run_validator
+from gatekeeper import run_gatekeeper
+from analyser import run_analyser
+from validator import run_validator
 from scorer import compute_score
 from datetime import datetime
 
