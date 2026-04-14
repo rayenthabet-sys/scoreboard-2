@@ -8,7 +8,7 @@ import os
 import json
 import re
 from langchain_groq import ChatGroq
-from langchain.schema import SystemMessage, HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 from models import GatekeeperResult
 
 SYSTEM_PROMPT = """Tu es le Gatekeeper de la plateforme Idéathon PACTE, un événement dédié à la santé mentale 
