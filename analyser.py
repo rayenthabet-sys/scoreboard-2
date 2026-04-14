@@ -34,7 +34,7 @@ L'impact_score doit refléter :
 
 def run_analyser(idea_text: str) -> AnalyserResult:
     llm = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
+        model="gemini-2.5-flash",
         google_api_key=os.environ["GEMINI_API_KEY"],
         temperature=0.3,
     )
