@@ -7,7 +7,7 @@ import os
 import json
 import re
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import SystemMessage, HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 from models import AnalyserResult
 
 SYSTEM_PROMPT = """Tu es l'analyste thématique de la plateforme Idéathon PACTE.
