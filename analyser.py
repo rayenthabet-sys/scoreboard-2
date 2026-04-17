@@ -6,7 +6,8 @@ Extracts thematic tags and computes the impact sub-score.
 import os
 import json
 import re
-from langchain_google_genai import ChatGoogleGenerativeAI
+import time
+from langchain_groq import ChatGroq
 from langchain_core.messages import SystemMessage, HumanMessage
 from models import AnalyserResult
 
@@ -66,9 +67,9 @@ Réponds UNIQUEMENT avec un JSON valide (sans markdown) :
 
 
 def run_analyser(idea_text: str) -> AnalyserResult:
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
-        google_api_key=os.environ["GEMINI_API_KEY"],
+    llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
+        api_key=os.environ["GROQ_API_KEY"],
         temperature=0.3,
     )
 
@@ -77,12 +78,18 @@ def run_analyser(idea_text: str) -> AnalyserResult:
         HumanMessage(content=f"Idée à analyser :\n\n{idea_text}"),
     ]
 
-    response = llm.invoke(messages)
-    raw = response.content.strip()
-    raw = re.sub(r"```json|```", "", raw).strip()
-
-    data = json.loads(raw)
-    return AnalyserResult(
-        themes=data["themes"],
-        impact_score=float(data["impact_score"]),
-    )
+    for attempt in range(3):
+        try:
+            response = llm.invoke(messages)
+            raw = re.sub(r"```json|```", "", response.content.strip()).strip()
+            data = json.loads(raw)
+            return AnalyserResult(
+                themes=data["themes"],
+                impact_score=float(data["impact_score"]),
+            )
+        except Exception as e:
+            if attempt < 2:
+                time.sleep(3 * (attempt + 1))
+                continue
+            raise
+    raise RuntimeError("Analyser failed after 3 attempts")
