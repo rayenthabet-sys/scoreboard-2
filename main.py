@@ -24,7 +24,7 @@ load_dotenv()
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
+from typing import Any
 from datetime import datetime
 
 from models import IdeaSubmission, PipelineResult, LeaderboardEntry
@@ -71,7 +71,7 @@ def serve_leaderboard_ui():
 # ── API Endpoints ────────────────────────────────────────────────────────────
 
 @app.post("/submit-idea", response_model=PipelineResult)
-def submit_idea(submission: IdeaSubmission, db: Session = Depends(get_db)):
+def submit_idea(submission: IdeaSubmission, db: Any = Depends(get_db)):
     """
     Run the full AI pipeline on a submitted idea and persist the result.
     Returns the full PipelineResult (including rejection details if filtered out).
@@ -86,7 +86,7 @@ def submit_idea(submission: IdeaSubmission, db: Session = Depends(get_db)):
 
 
 @app.get("/leaderboard", response_model=list[LeaderboardEntry])
-def leaderboard(limit: int = 20, db: Session = Depends(get_db)):
+def leaderboard(limit: int = 20, db: Any = Depends(get_db)):
     """
     Return the top N relevant ideas ranked by final score.
     """
