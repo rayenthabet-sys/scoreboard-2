@@ -6,9 +6,21 @@ Endpoints:
   GET  /               → serve index.html
   GET  /leaderboard-ui → serve leaderboard.html
 """
+import collections
+import collections.abc
+# Patch removed aliases for Python 3.10+ compatibility
+for _name in ("MutableSet", "MutableMapping", "MutableSequence", "Callable",
+              "Mapping", "Sequence", "Set", "MutableMapping"):
+    if not hasattr(collections, _name):
+        setattr(collections, _name, getattr(collections.abc, _name))
 
-import json
+
+
+
+
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -83,15 +95,15 @@ def leaderboard(limit: int = 20, db: Session = Depends(get_db)):
     for rank, record in enumerate(records, start=1):
         entries.append(LeaderboardEntry(
             rank=rank,
-            participant_name=record.participant_name,
-            school=record.school,
-            idea_text=record.idea_text,
-            themes=json.loads(record.themes or "[]"),
-            final_score=record.final_score,
-            impact_score=record.impact_score,
-            feasibility_score=record.feasibility_score,
-            innovation_score=record.innovation_score,
-            submitted_at=record.submitted_at,
+            participant_name=record["participant_name"],
+            school=record["school"],
+            idea_text=record["idea_text"],
+            themes=record["themes"],          # already decoded by get_leaderboard()
+            final_score=record["final_score"],
+            impact_score=record["impact_score"],
+            feasibility_score=record["feasibility_score"],
+            innovation_score=record["innovation_score"],
+            submitted_at=record["submitted_at"],
         ))
     return entries
 

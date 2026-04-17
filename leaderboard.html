@@ -179,7 +179,7 @@
     border-radius: 0.85rem;
     padding: 1rem;
     transition: border-color 0.2s, transform 0.15s;
-    cursor: default;
+    cursor: pointer;
   }
 
   .entry:hover {
@@ -346,6 +346,238 @@
     from { opacity: 0; transform: translateX(-10px); }
     to   { opacity: 1; transform: translateX(0); }
   }
+
+  /* ── Modal ─────────────────────────────────────────────────────────── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 9, 16, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .modal-backdrop.open {
+    display: flex;
+    animation: modalBgIn 0.25s ease both;
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1.2rem;
+    width: 100%;
+    max-width: 680px;
+    max-height: 88vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    position: relative;
+  }
+
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 1;
+  }
+
+  .modal-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .modal-rank-badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.1rem;
+  }
+
+  .modal-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .modal-school {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .modal-close {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+  .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .modal-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  .modal-idea-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  /* Score bars */
+  .scores-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 480px) { .scores-grid { grid-template-columns: 1fr; } }
+
+  .score-bar-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .score-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .score-bar-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-bar-track {
+    height: 4px;
+    background: var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bar-impact   { background: linear-gradient(90deg, #3dffc0, #00d4aa); }
+  .bar-feasibility { background: linear-gradient(90deg, #7b61ff, #a78bfa); }
+  .bar-innovation  { background: linear-gradient(90deg, #f5c842, #fb923c); }
+
+  .final-score-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(61,255,192,0.06);
+    border: 1px solid rgba(61,255,192,0.2);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .final-score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .final-score-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .modal-themes { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .modal-enrichment {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: #b0bcce;
+    background: rgba(123,97,255,0.06);
+    border: 1px solid rgba(123,97,255,0.18);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .similar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .similar-item {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.4;
+    padding: 0.5rem 0.75rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    word-break: break-word;
+  }
+
+  .similar-item a {
+    color: var(--accent2);
+    text-decoration: none;
+  }
+
+  .similar-item a:hover { text-decoration: underline; }
+
+  @keyframes modalBgIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
 </style>
 </head>
 <body>
@@ -398,6 +630,68 @@
     <a href="/" class="submit-link">↗ Soumettre une idée</a>
   </div>
 
+</div>
+
+<!-- ── Idea Detail Modal ───────────────────────────────────────────── -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalName">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-meta">
+        <div class="modal-rank-badge" id="modalRank"></div>
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-school" id="modalSchool"></div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Fermer">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div>
+        <div class="modal-section-label">💡 Idée complète</div>
+        <div class="modal-idea-text" id="modalIdea"></div>
+      </div>
+
+      <div>
+        <div class="modal-section-label">📊 Scores détaillés</div>
+        <div class="scores-grid">
+          <div class="score-bar-card">
+            <div class="score-bar-label">Impact</div>
+            <div class="score-bar-num" id="modalImpact" style="color:var(--accent)"></div>
+            <div class="score-bar-track"><div class="score-bar-fill bar-impact" id="barImpact"></div></div>
+          </div>
+          <div class="score-bar-card">
+            <div class="score-bar-label">Faisabilité</div>
+            <div class="score-bar-num" id="modalFeasibility" style="color:#a78bfa"></div>
+            <div class="score-bar-track"><div class="score-bar-fill bar-feasibility" id="barFeasibility"></div></div>
+          </div>
+          <div class="score-bar-card">
+            <div class="score-bar-label">Innovation</div>
+            <div class="score-bar-num" id="modalInnovation" style="color:var(--gold)"></div>
+            <div class="score-bar-track"><div class="score-bar-fill bar-innovation" id="barInnovation"></div></div>
+          </div>
+        </div>
+        <div class="final-score-row" style="margin-top:0.75rem">
+          <span class="final-score-label">Score final</span>
+          <span class="final-score-num" id="modalFinal"></span>
+        </div>
+      </div>
+
+      <div id="modalThemesSection">
+        <div class="modal-section-label">🏷️ Thématiques</div>
+        <div class="modal-themes" id="modalThemes"></div>
+      </div>
+
+      <div id="modalEnrichmentSection">
+        <div class="modal-section-label">🌐 Contexte & enrichissement</div>
+        <div class="modal-enrichment" id="modalEnrichment"></div>
+      </div>
+
+      <div id="modalSimilarSection">
+        <div class="modal-section-label">🔗 Solutions similaires identifiées</div>
+        <div class="similar-list" id="modalSimilar"></div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
@@ -471,7 +765,7 @@
         : entry.idea_text;
 
       return `
-        <div class="entry ${rankClass}" style="animation-delay:${i * 0.05}s">
+        <div class="entry ${rankClass}" style="animation-delay:${i * 0.05}s" data-idx="${i}" role="button" tabindex="0" aria-label="Voir l'idée de ${entry.participant_name}">
           <div class="entry-rank">${rankEmoji(entry.rank)}</div>
           <div class="entry-body">
             <div class="entry-name">${entry.participant_name}</div>
@@ -485,6 +779,13 @@
           </div>
         </div>`;
     }).join('');
+
+    // Attach click handlers after rendering
+    container.querySelectorAll('.entry').forEach(el => {
+      const idx = parseInt(el.dataset.idx);
+      el.addEventListener('click', () => openModal(data[idx]));
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(data[idx]); });
+    });
   }
 
   async function refresh() {
@@ -496,6 +797,89 @@
     }
     startProgressBar();
   }
+
+  // ── Modal logic ─────────────────────────────────────────────────────
+  const backdrop = document.getElementById('modalBackdrop');
+  const modalEl  = document.getElementById('modal');
+
+  function openModal(entry) {
+    const rankLabel = entry.rank <= 3
+      ? ['🥇 1ère place', '🥈 2ème place', '🥉 3ème place'][entry.rank - 1]
+      : `Rang #${entry.rank}`;
+
+    document.getElementById('modalRank').textContent    = rankLabel;
+    document.getElementById('modalName').textContent    = entry.participant_name;
+    document.getElementById('modalSchool').textContent  = entry.school;
+    document.getElementById('modalIdea').textContent    = entry.idea_text;
+    document.getElementById('modalFinal').textContent   = entry.final_score.toFixed(1) + ' / 100';
+    document.getElementById('modalImpact').textContent      = entry.impact_score.toFixed(1);
+    document.getElementById('modalFeasibility').textContent = entry.feasibility_score.toFixed(1);
+    document.getElementById('modalInnovation').textContent  = entry.innovation_score.toFixed(1);
+
+    // Themes
+    const themes = (entry.themes || []);
+    const themesSection = document.getElementById('modalThemesSection');
+    if (themes.length) {
+      document.getElementById('modalThemes').innerHTML = themes.map(t =>
+        `<span class="tag">${t}</span>`).join('');
+      themesSection.style.display = 'block';
+    } else {
+      themesSection.style.display = 'none';
+    }
+
+    // Enrichment
+    const enrichSection = document.getElementById('modalEnrichmentSection');
+    const enrichText = entry.enrichment_text || '';
+    if (enrichText && enrichText !== 'Aucun enrichissement disponible.') {
+      document.getElementById('modalEnrichment').textContent = enrichText;
+      enrichSection.style.display = 'block';
+    } else {
+      enrichSection.style.display = 'none';
+    }
+
+    // Similar solutions
+    const simSection = document.getElementById('modalSimilarSection');
+    const sims = entry.similar_solutions || [];
+    if (sims.length) {
+      document.getElementById('modalSimilar').innerHTML = sims.map(s => {
+        // Format: "Title — https://url"
+        const parts = s.split(' — ');
+        const url   = parts.length > 1 ? parts.pop() : null;
+        const title = parts.join(' — ');
+        return url
+          ? `<div class="similar-item">${title} — <a href="${url}" target="_blank" rel="noopener">${url}</a></div>`
+          : `<div class="similar-item">${s}</div>`;
+      }).join('');
+      simSection.style.display = 'block';
+    } else {
+      simSection.style.display = 'none';
+    }
+
+    // Open
+    backdrop.classList.add('open');
+    modalEl.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+
+    // Animate score bars after a short delay (so transition fires)
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.getElementById('barImpact').style.width      = entry.impact_score + '%';
+      document.getElementById('barFeasibility').style.width = entry.feasibility_score + '%';
+      document.getElementById('barInnovation').style.width  = entry.innovation_score + '%';
+    }));
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    // Reset bars so they animate again next time
+    ['barImpact','barFeasibility','barInnovation'].forEach(id =>
+      document.getElementById(id).style.width = '0%'
+    );
+  }
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   // Initial load then poll
   refresh();

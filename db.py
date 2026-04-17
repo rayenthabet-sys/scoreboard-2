@@ -2,28 +2,35 @@
 import os
 import json
 import psycopg2
+import psycopg2.pool
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from contextlib import contextmanager
+from dotenv import load_dotenv
+
+load_dotenv()  # ← must be here too, db.py is imported before main.py runs
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
-    raise RuntimeError(
-        "DATABASE_URL is not set. "
-        "Add it to your .env file: "
-        "DATABASE_URL=postgresql://user:pass@host/dbname?sslmode=require"
-    )
+    raise RuntimeError("DATABASE_URL is not set")
 
-
-def get_connection():
-    # Pass as dsn= so psycopg2 correctly parses ?sslmode=require from the URL
-    return psycopg2.connect(dsn=DATABASE_URL)
+# Connection pool — Neon free tier allows max 10 connections
+_pool = psycopg2.pool.SimpleConnectionPool(
+    minconn=1,
+    maxconn=5,
+    dsn=DATABASE_URL,
+    connect_timeout=10,          # ← stops the infinite hang
+    keepalives=1,
+    keepalives_idle=30,
+    keepalives_interval=10,
+    keepalives_count=5,
+)
 
 
 @contextmanager
 def get_cursor():
-    conn = get_connection()
+    conn = _pool.getconn()
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             yield cur, conn
@@ -32,7 +39,7 @@ def get_cursor():
         conn.rollback()
         raise
     finally:
-        conn.close()
+        _pool.putconn(conn)       # ← return to pool, don't close
 
 
 def create_tables():
@@ -58,7 +65,6 @@ def create_tables():
 
 
 def get_db():
-    """FastAPI dependency — yields a dummy object, real connection is per-operation."""
     yield None
 
 
