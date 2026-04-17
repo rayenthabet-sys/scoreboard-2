@@ -78,7 +78,7 @@ def run_gatekeeper(idea_text: str) -> tuple[GatekeeperResult, float]:
     llm = ChatGroq(
         model="llama-3.3-70b-versatile",
         api_key=os.environ["GROQ_API_KEY"],
-        temperature=0.2,
+        temperature=0.0,
     )
 
     messages = [
