@@ -405,8 +405,557 @@
     from { transform: scaleX(0); }
     to   { transform: scaleX(1); }
   }
+
+
+
 </style>
 </head>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     AMEL — Psychiatrist Chat Widget
+     Paste this block just before </body> in index.html AND leaderboard.html
+     ═══════════════════════════════════════════════════════════════════ -->
+<style>
+  /* ── Widget shell ───────────────────────────────────────────────── */
+  #amel-bubble {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── Tooltip that appears before first open ─────────────────────── */
+  #amel-tooltip {
+    background: #141c2e;
+    border: 1px solid #1f2d45;
+    color: #e8edf5;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.75rem 0.75rem 0 0.75rem;
+    max-width: 200px;
+    text-align: right;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    animation: amel-fadeUp 0.4s ease both;
+    cursor: pointer;
+  }
+
+  #amel-tooltip strong { color: #3dffc0; }
+
+  /* ── Trigger button ─────────────────────────────────────────────── */
+  #amel-trigger {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3dffc0, #7b61ff);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(61,255,192,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  #amel-trigger:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(61,255,192,0.5);
+  }
+
+  #amel-trigger svg { transition: transform 0.3s; }
+  #amel-trigger.open svg { transform: rotate(45deg); }
+
+  /* Notification dot */
+  #amel-dot {
+    position: absolute;
+    top: 2px; right: 2px;
+    width: 12px; height: 12px;
+    background: #ff5a5a;
+    border: 2px solid #0b0f1a;
+    border-radius: 50%;
+    animation: amel-pulse 2s infinite;
+  }
+
+  /* ── Chat panel ─────────────────────────────────────────────────── */
+  #amel-panel {
+    width: 360px;
+    max-width: calc(100vw - 2rem);
+    background: #111827;
+    border: 1px solid #1f2d45;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    display: none;
+    flex-direction: column;
+    animation: amel-fadeUp 0.3s cubic-bezier(0.22,1,0.36,1) both;
+    max-height: 520px;
+  }
+
+  #amel-panel.open { display: flex; }
+
+  /* Panel header */
+  #amel-header {
+    padding: 1rem 1.25rem;
+    background: #0e1421;
+    border-bottom: 1px solid #1a2640;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .amel-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3dffc0 0%, #7b61ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .amel-info { flex: 1; }
+
+  .amel-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #e8edf5;
+    line-height: 1.2;
+  }
+
+  .amel-status {
+    font-size: 0.7rem;
+    color: #3dffc0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .amel-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #3dffc0;
+    border-radius: 50%;
+    animation: amel-pulse 2s infinite;
+    display: inline-block;
+  }
+
+  #amel-close-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #1f2d45;
+    color: #6b7a99;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  #amel-close-btn:hover { background: rgba(255,255,255,0.1); color: #e8edf5; }
+
+  /* Messages area */
+  #amel-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: #1f2d45 transparent;
+  }
+
+  .amel-msg {
+    display: flex;
+    gap: 0.5rem;
+    animation: amel-msgIn 0.25s ease both;
+  }
+
+  .amel-msg.user { flex-direction: row-reverse; }
+
+  .amel-msg-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3dffc0, #7b61ff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .amel-msg.user .amel-msg-avatar {
+    background: #1f2d45;
+    color: #6b7a99;
+  }
+
+  .amel-bubble-text {
+    max-width: 78%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #e8edf5;
+  }
+
+  .amel-msg.bot .amel-bubble-text {
+    background: #141c2e;
+    border: 1px solid #1f2d45;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  .amel-msg.user .amel-bubble-text {
+    background: linear-gradient(135deg, rgba(61,255,192,0.15), rgba(123,97,255,0.15));
+    border: 1px solid rgba(61,255,192,0.2);
+    border-bottom-right-radius: 0.25rem;
+    text-align: right;
+  }
+
+  /* Typing indicator */
+  .amel-typing .amel-bubble-text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.7rem 1rem;
+  }
+
+  .amel-dot-typing {
+    width: 7px; height: 7px;
+    background: #6b7a99;
+    border-radius: 50%;
+    animation: amel-typing 1.2s infinite;
+  }
+
+  .amel-dot-typing:nth-child(2) { animation-delay: 0.2s; }
+  .amel-dot-typing:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Input area */
+  #amel-footer {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #1a2640;
+    background: #0e1421;
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+  }
+
+  #amel-input {
+    flex: 1;
+    background: #141c2e;
+    border: 1px solid #1f2d45;
+    border-radius: 0.75rem;
+    color: #e8edf5;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.85rem;
+    outline: none;
+    resize: none;
+    min-height: 38px;
+    max-height: 100px;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+  }
+
+  #amel-input:focus { border-color: #3dffc0; }
+  #amel-input::placeholder { color: #3a4a60; }
+
+  #amel-send {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #3dffc0;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s, background 0.2s;
+  }
+
+  #amel-send:hover { transform: scale(1.08); background: #5fffcc; }
+  #amel-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* Disclaimer */
+  #amel-disclaimer {
+    font-size: 0.62rem;
+    color: #3a4a60;
+    text-align: center;
+    padding: 0.4rem 1rem 0.6rem;
+    background: #0e1421;
+    line-height: 1.4;
+  }
+
+  /* ── Animations ─────────────────────────────────────────────────── */
+  @keyframes amel-fadeUp {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes amel-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  @keyframes amel-typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30%            { transform: translateY(-5px); opacity: 1; }
+  }
+
+  @keyframes amel-msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div id="amel-bubble">
+  <!-- Tooltip (hidden once chat is opened) -->
+  <div id="amel-tooltip" onclick="amelToggle()">
+    Besoin de parler ? <strong>Amel</strong> est là 💚
+  </div>
+
+  <!-- Chat panel -->
+  <div id="amel-panel" role="dialog" aria-label="Chat avec Amel">
+    <div id="amel-header">
+      <div class="amel-avatar">🧠</div>
+      <div class="amel-info">
+        <div class="amel-name">Amel</div>
+        <div class="amel-status">Conseillère en ligne</div>
+      </div>
+      <button id="amel-close-btn" onclick="amelToggle()" aria-label="Fermer">✕</button>
+    </div>
+
+    <div id="amel-messages"></div>
+
+    <div id="amel-footer">
+      <textarea
+        id="amel-input"
+        placeholder="Écris ce que tu ressens…"
+        rows="1"
+        aria-label="Message"
+      ></textarea>
+      <button id="amel-send" aria-label="Envoyer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13" stroke="#0b0f1a" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="#0b0f1a" stroke-width="2.5" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div id="amel-disclaimer">
+      Amel n'est pas un médecin. En cas d'urgence : <strong style="color:#6b7a99">71 391 700</strong>
+    </div>
+  </div>
+
+  <!-- Trigger button -->
+  <button id="amel-trigger" onclick="amelToggle()" aria-label="Ouvrir le chat Amel">
+    <div id="amel-dot"></div>
+    <svg id="amel-icon-chat" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+        stroke="#0b0f1a" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+(function () {
+  // ── State ────────────────────────────────────────────────────────────
+  const AMEL_API = '/api/chat';
+  let amelHistory = JSON.parse(sessionStorage.getItem('amelHistory')) || [];
+  let amelOpen    = sessionStorage.getItem('amelOpen') === 'true';
+  let amelBusy    = false;
+
+  const WELCOME = "Bonjour ! Je suis Amel 👋 Je suis là pour t'écouter sans jugement. Comment tu vas aujourd'hui ?";
+
+  // ── DOM refs ─────────────────────────────────────────────────────────
+  const panel    = document.getElementById('amel-panel');
+  const messages = document.getElementById('amel-messages');
+  const input    = document.getElementById('amel-input');
+  const sendBtn  = document.getElementById('amel-send');
+  const trigger  = document.getElementById('amel-trigger');
+  const tooltip  = document.getElementById('amel-tooltip');
+  const dot      = document.getElementById('amel-dot');
+
+  // ── Init Session State ───────────────────────────────────────────────
+  if (amelHistory.length > 0 || amelOpen) {
+    if (tooltip) tooltip.style.display = 'none';
+    if (dot) dot.style.display = 'none';
+  }
+  
+  if (amelOpen) {
+    panel.classList.add('open');
+    trigger.classList.add('open');
+  }
+
+  // ── Toggle panel ─────────────────────────────────────────────────────
+  window.amelToggle = function () {
+    amelOpen = !amelOpen;
+    sessionStorage.setItem('amelOpen', amelOpen);
+    panel.classList.toggle('open', amelOpen);
+    trigger.classList.toggle('open', amelOpen);
+    if(tooltip) tooltip.style.display = 'none';
+    if(dot) dot.style.display     = 'none';
+
+    if (amelOpen && amelHistory.length === 0) {
+      // Show welcome message on first open
+      setTimeout(() => {
+        addMessage('bot', WELCOME);
+        amelHistory.push({ role: 'assistant', content: WELCOME });
+        sessionStorage.setItem('amelHistory', JSON.stringify(amelHistory));
+      }, 300);
+    }
+    if (amelOpen) input.focus();
+  };
+
+  // ── Render a message bubble ───────────────────────────────────────────
+  function addMessage(role, text) {
+    const wrap = document.createElement('div');
+    wrap.className = `amel-msg ${role}`;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'amel-msg-avatar';
+    avatar.textContent = role === 'bot' ? '🧠' : '👤';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'amel-bubble-text';
+    bubble.textContent = text;
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+    return wrap;
+  }
+
+  // ── Typing indicator ──────────────────────────────────────────────────
+  function showTyping() {
+    const wrap = document.createElement('div');
+    wrap.className = 'amel-msg bot amel-typing';
+    wrap.id = 'amel-typing-indicator';
+
+    const avatar = document.createElement('div');
+    avatar.className = 'amel-msg-avatar';
+    avatar.textContent = '🧠';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'amel-bubble-text';
+    [1,2,3].forEach(() => {
+      const d = document.createElement('div');
+      d.className = 'amel-dot-typing';
+      bubble.appendChild(d);
+    });
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messages.appendChild(wrap);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('amel-typing-indicator');
+    if (el) el.remove();
+  }
+
+  // ── Auto-resize textarea ──────────────────────────────────────────────
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+  });
+
+  // ── Send on Enter (Shift+Enter = newline) ─────────────────────────────
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      amelSend();
+    }
+  });
+
+  sendBtn.addEventListener('click', amelSend);
+
+  // ── Core send logic ───────────────────────────────────────────────────
+  async function amelSend() {
+    const text = input.value.trim();
+    if (!text || amelBusy) return;
+
+    // Render user message
+    addMessage('user', text);
+    input.value = '';
+    input.style.height = 'auto';
+
+    // Lock UI
+    amelBusy = true;
+    sendBtn.disabled = true;
+    showTyping();
+
+    // Persist to local history for context
+    amelHistory.push({ role: 'user', content: text });
+    sessionStorage.setItem('amelHistory', JSON.stringify(amelHistory));
+
+    try {
+      const res = await fetch(AMEL_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          history: amelHistory.slice(0, -1)   // history *before* current message
+        })
+      });
+
+      removeTyping();
+
+      if (!res.ok) throw new Error('Erreur réseau');
+
+      const data = await res.json();
+      const reply = data.response || "Désolée, je n'ai pas pu répondre. Réessaie dans un instant.";
+
+      addMessage('bot', reply);
+      amelHistory.push({ role: 'assistant', content: reply });
+
+      // Keep history from growing too large client-side
+      if (amelHistory.length > 40) amelHistory = amelHistory.slice(-40);
+      sessionStorage.setItem('amelHistory', JSON.stringify(amelHistory));
+
+    } catch (err) {
+      removeTyping();
+      addMessage('bot', "Désolée, une erreur est survenue. Vérifie ta connexion et réessaie.");
+      // Remove the failed user message from history
+      amelHistory.pop();
+      sessionStorage.setItem('amelHistory', JSON.stringify(amelHistory));
+    } finally {
+      amelBusy = false;
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  }
+
+  // ── Auto-hide tooltip after 6 s ───────────────────────────────────────
+  setTimeout(() => {
+    if (!amelOpen && tooltip) {
+      tooltip.style.transition = 'opacity 0.5s';
+      tooltip.style.opacity    = '0';
+      setTimeout(() => { tooltip.style.display = 'none'; }, 500);
+    }
+  }, 6000);
+
+  // ── Restore UI on load ───────────────────────────────────────────────
+  amelHistory.forEach(msg => {
+    addMessage(msg.role === 'user' ? 'user' : 'bot', msg.content);
+  });
+  if (amelOpen) {
+    setTimeout(() => {
+      messages.scrollTop = messages.scrollHeight;
+    }, 50);
+  }
+
+})();
+</script>
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+
 <body>
 <div class="container">
   <header>

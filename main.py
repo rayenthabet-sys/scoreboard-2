@@ -15,6 +15,7 @@ for _name in ("MutableSet", "MutableMapping", "MutableSequence", "Callable",
         setattr(collections, _name, getattr(collections.abc, _name))
 
 
+from chatbot import router as chatbot_router
 
 
 
@@ -37,6 +38,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -45,12 +47,20 @@ app.add_middleware(
 )
 
 
+app.include_router(chatbot_router)
+
+
 @app.on_event("startup")
 def startup_event():
     create_tables()
 
 
 # ── HTML Pages ───────────────────────────────────────────────────────────────
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    from fastapi import Response
+    return Response(status_code=204)
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
