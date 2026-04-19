@@ -1417,7 +1417,7 @@
 
     async function fetchLeaderboard() {
       try {
-        const res = await fetch(API_BASE + '/leaderboard?limit=20');
+        const res = await fetch(API_BASE + '/leaderboard?limit=1000');
         if (!res.ok) throw new Error('Erreur réseau');
         return await res.json();
       } catch (e) {

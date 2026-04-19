@@ -96,7 +96,7 @@ def submit_idea(submission: IdeaSubmission, db: Any = Depends(get_db)):
 
 
 @app.get("/leaderboard", response_model=list[LeaderboardEntry])
-def leaderboard(limit: int = 20, db: Any = Depends(get_db)):
+def leaderboard(limit: int = 1000, db: Any = Depends(get_db)):
     """
     Return the top N relevant ideas ranked by final score.
     """

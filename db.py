@@ -96,7 +96,7 @@ def save_idea(db, result) -> dict:
         return cur.fetchone()
 
 
-def get_leaderboard(db, limit: int = 20) -> list[dict]:
+def get_leaderboard(db, limit: int = 1000) -> list[dict]:
     with get_cursor() as (cur, conn):
         cur.execute("""
             SELECT
