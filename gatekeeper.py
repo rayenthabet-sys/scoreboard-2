@@ -60,6 +60,10 @@ du campus sans identifier les individus."
 Pourquoi : Mécanisme systémique, ancré dans la réalité locale tunisienne,
 adresse le stigma par la normalisation institutionnelle, mesurable.
 
+SCORE 100 — EXCEPTIONNEL :
+Idée : "Une initiative de rupture totale qui combine un mécanisme inédit, une faisabilité immédiate et un impact culturel ciblant la cause profonde du stigma."
+Pourquoi : Ce projet transforme profondément et durablement les mentalités avec une approche complètement novatrice, difficilement trouvable ailleurs.
+
 --- FIN BENCHMARK ---
 
 Réponds UNIQUEMENT avec un JSON valide (sans markdown) :

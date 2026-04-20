@@ -55,6 +55,10 @@ Pourquoi : Impact systémique sur la normalisation sociale, ancré dans
 des lieux de vie réels, scalable, adresse le stigma dans des espaces 
 non-médicaux ce qui est exactement le bon levier culturel.
 
+IMPACT 100 :
+Idée : "Une démarche parfaite qui déploie une solution concrète de dé-stigmatisation touchant simultanément les étudiants, les familles et le corps professoral."
+Pourquoi : Modèle transformateur et sans faille, avec un impact mesurable et généralisé sur toute la communauté éducative, s'attaquant à la racine du tabou social.
+
 --- FIN BENCHMARK ---
 
 Réponds UNIQUEMENT avec un JSON valide (sans markdown) :
