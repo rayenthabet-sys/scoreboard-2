@@ -978,13 +978,22 @@
       </div>
       <div class="field">
         <label>École <span>*</span></label>
-        <select id="school">
+        <select id="school" onchange="toggleCustomSchool()">
           <option value="" disabled selected>Choisir…</option>
           <option value="IPEST">IPEST</option>
           <option value="SUP'COM">SUP'COM</option>
           <option value="ISSHT">ISSHT</option>
+          <option value="ENIT">ENIT</option>
+          <option value="ENSTAB">ENSTAB</option>
+          <option value="ENSI">ENSI</option>
+          <option value="Autres">Autres…</option>
         </select>
       </div>
+    </div>
+
+    <div class="field" id="customSchoolField" style="display: none; margin-top: -0.5rem; animation: fadeUp 0.3s ease both;">
+      <label>Votre établissement <span>*</span></label>
+      <input type="text" id="customSchool" placeholder="Nom de votre école" maxlength="50" />
     </div>
 
     <button class="btn-submit" id="submitBtn" onclick="submitIdea()">
@@ -1038,7 +1047,13 @@
   async function submitIdea() {
     const idea = document.getElementById('ideaText').value.trim();
     const name = document.getElementById('participantName').value.trim();
-    const school = document.getElementById('school').value;
+    let school = document.getElementById('school').value;
+
+    if (school === 'Autres') {
+      const custom = document.getElementById('customSchool').value.trim();
+      if (!custom) return alert('Veuillez entrer le nom de votre école.');
+      school = custom;
+    }
 
     if (!idea || idea.length < 20) return alert('Idée trop courte (minimum 20 caractères).');
     if (!name) return alert('Veuillez entrer votre nom.');
@@ -1083,6 +1098,17 @@
       btn.disabled = false;
       btn.textContent = 'Soumettre une nouvelle idée →';
       document.getElementById('loadingBar').classList.remove('active');
+    }
+  }
+
+  function toggleCustomSchool() {
+    const schoolSelect = document.getElementById('school');
+    const customField = document.getElementById('customSchoolField');
+    if (schoolSelect.value === 'Autres') {
+      customField.style.display = 'block';
+      document.getElementById('customSchool').focus();
+    } else {
+      customField.style.display = 'none';
     }
   }
 

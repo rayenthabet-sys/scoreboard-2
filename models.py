@@ -6,7 +6,7 @@ from datetime import datetime
 class IdeaSubmission(BaseModel):
     idea_text: str = Field(..., min_length=20, max_length=2000)
     participant_name: str = Field(..., min_length=2, max_length=100)
-    school: str = Field(..., pattern="^(IPEST|SUP'COM|ISSHT)$")
+    school: str = Field(..., min_length=2, max_length=50)
 
 
 class GatekeeperResult(BaseModel):

@@ -25,7 +25,9 @@ Une idée DOIT contenir :
 ✓ Un public cible défini
 ✓ Un mécanisme d'action concret
 
-Pour l'innovation_score, utilise CES EXEMPLES comme référence fixe :
+Pour l'innovation_score, utilise CES EXEMPLES comme référence fixe et RESPECTE la distribution attendue :
+
+DISTRIBUTION OBLIGATOIRE : ~50% des idées acceptées se situent entre 30–55, ~35% entre 55–72, ~12% entre 72–84, et MOINS DE 3% au-dessus de 85. Un score de 85+ est RARE et réservé aux idées genuinement transformatrices. Si tu dépasses 75, justifie-le explicitement.
 
 --- BENCHMARK ---
 
@@ -44,25 +46,42 @@ Idée : "Une plateforme de consultation psychologique en ligne gratuite pour ét
 Pourquoi : Le concept existe déjà massivement (BetterHelp, Wisal, etc.).
 La gratuité ne suffit pas comme différenciation. Aucun élément anti-stigma.
 
-SCORE 55 — PERTINENT, innovation faible :
+SCORE 48 — PERTINENT, innovation faible :
 Idée : "Un système de parrainage entre étudiants de première année et 
 étudiants seniors formés à l'écoute active, pour briser l'isolement 
 et normaliser les conversations sur la santé mentale dès l'arrivée à l'université."
 Pourquoi : Mécanisme clair (parrainage), public défini (L1), lien direct 
-avec la normalisation du sujet. Mais le concept de mentoring existe déjà.
+avec la normalisation du sujet. Mais le concept de mentoring est ancien et largement répandu.
+Pas de différenciation locale forte, pas de mécanisme de changement culturel durable.
 
-SCORE 80 — FORT :
+SCORE 62 — BON, mais pas exceptionnel :
 Idée : "Un réseau d'ambassadeurs santé mentale certifiés dans chaque 
-grande école tunisienne (IPEST, SUP'COM, ISSHT...), formés à détecter 
+grande école tunisienne (IPEST, SUP'COM, ISSHT, ENIT, ENSTAB, ENSI...), formés à détecter 
 les signaux faibles et orienter vers des professionnels — avec un tableau 
 de bord anonymisé permettant aux administrations de mesurer le bien-être 
 du campus sans identifier les individus."
-Pourquoi : Mécanisme systémique, ancré dans la réalité locale tunisienne,
-adresse le stigma par la normalisation institutionnelle, mesurable.
+Pourquoi : Mécanisme systémique, ancré localement, mesurable. Mais le modèle
+d'ambassadeurs étudiants en santé mentale est déjà documenté dans d'autres pays.
+Pas de rupture conceptuelle, exécution classique.
 
-SCORE 100 — EXCEPTIONNEL :
-Idée : "Une initiative de rupture totale qui combine un mécanisme inédit, une faisabilité immédiate et un impact culturel ciblant la cause profonde du stigma."
-Pourquoi : Ce projet transforme profondément et durablement les mentalités avec une approche complètement novatrice, difficilement trouvable ailleurs.
+SCORE 76 — FORT, innovation réelle :
+Idée : "Un programme de certification 'Espace Safe' déployé dans les cafés et
+espaces étudiants de Tunis : les gérants reçoivent une formation de 4h en écoute
+de premier niveau, affichent un label officiel PACTE, et reportent anonymement
+les tendances via une app — créant des refuges physiques hors du cadre universitaire
+qui normalisent le fait de 'ne pas aller bien' dans des espaces du quotidien."
+Pourquoi : Mécanisme ancré dans des espaces non-médicaux (levier culturel fort),
+scalable économiquement, adresse le stigma en dehors du campus. Reste une adaptation
+d'un modèle existant (Safe Space certification), pas une rupture totale.
+
+SCORE 85+ — RÉSERVÉ AUX IDÉES VÉRITABLEMENT EXCEPTIONNELLES (moins de 3% des soumissions) :
+Pour atteindre 85+, une idée DOIT réunir TOUS ces critères simultanément :
+✓ Mécanisme complètement inédit — introuvable sous cette forme dans la littérature ou les projets existants
+✓ Adresse la cause racine du stigma (pas un symptôme) avec une logique de changement culturel démontrée
+✓ Faisable immédiatement dans le contexte tunisien sans dépendance à des ressources externes
+✓ Scalable au-delà du campus vers d'autres institutions ou régions
+✓ Intègre un mécanisme de mesure d'impact concret
+Si l'idée ne coche pas les 5 critères, le score DOIT rester sous 85.
 
 --- FIN BENCHMARK ---
 

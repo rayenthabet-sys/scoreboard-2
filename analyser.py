@@ -20,7 +20,9 @@ PÉNALISE fortement :
 - Les idées déjà existantes sans valeur ajoutée (-25 pts)
 - Le manque de faisabilité dans le contexte tunisien (-10 pts)
 
-Utilise CES EXEMPLES comme étalon fixe pour calibrer ton impact_score :
+Utilise CES EXEMPLES comme étalon fixe pour calibrer ton impact_score ET RESPECTE la distribution attendue :
+
+DISTRIBUTION OBLIGATOIRE : ~50% des idées acceptées se situent entre 20–55, ~35% entre 55–72, ~12% entre 72–84, et MOINS DE 3% au-dessus de 85. Un impact de 85+ signifie un changement culturel démontrable et systémique — c'est extrêmement rare. Si tu dépasses 75, justifie-le explicitement.
 
 --- BENCHMARK ---
 
@@ -37,27 +39,35 @@ Pourquoi : L'accessibilité est réelle mais l'impact anti-stigma est indirect.
 Le matching psychologue/patient existe déjà. Pas de mécanisme de changement 
 culturel ou communautaire.
 
-IMPACT 60 :
+IMPACT 52 :
 Idée : "Des capsules vidéo courtes (format Reels/TikTok) co-créées avec 
 des étudiants de SUP'COM et des psychologues, montrant des témoignages 
 anonymes de pairs qui ont consulté — diffusées sur les réseaux intra-campus."
 Pourquoi : Mécanisme de déstigmatisation par identification (les pairs).
 Portée réelle sur les réseaux. Mais impact limité au campus, pas de 
-mécanisme de suivi ou d'évaluation.
+mécanisme de suivi, d'évaluation ou de changement durable. Le format
+TikTok/Reels de sensibilisation est très répandu et son efficacité anti-stigma
+à long terme est discutable.
 
-IMPACT 82 :
+IMPACT 66 :
 Idée : "Un programme de certification 'Espace Safe' pour les cafés et 
 espaces étudiants tunisiens : les gérants sont formés à l'écoute de 
 premier niveau et affichent un label visible — créant des refuges physiques 
 de décompression hors du cadre universitaire, normalisant le fait de 
 'ne pas aller bien' dans des espaces neutres."
-Pourquoi : Impact systémique sur la normalisation sociale, ancré dans 
-des lieux de vie réels, scalable, adresse le stigma dans des espaces 
-non-médicaux ce qui est exactement le bon levier culturel.
+Pourquoi : Levier culturel pertinent (espaces non-médicaux), ancré dans le quotidien.
+Mais reste une adaptation d'un modèle existant. Impact mesuré principalement
+sur les personnes qui fréquentent déjà ces espaces — pas de mécanisme
+pour toucher les plus réticents à consulter.
 
-IMPACT 100 :
-Idée : "Une démarche parfaite qui déploie une solution concrète de dé-stigmatisation touchant simultanément les étudiants, les familles et le corps professoral."
-Pourquoi : Modèle transformateur et sans faille, avec un impact mesurable et généralisé sur toute la communauté éducative, s'attaquant à la racine du tabou social.
+IMPACT 85+ — RÉSERVÉ AUX IDÉES VÉRITABLEMENT TRANSFORMATRICES (moins de 3% des soumissions) :
+Pour atteindre 85+, une idée DOIT réunir TOUS ces critères simultanément :
+✓ Adresse la cause racine du stigma (croyances culturelles, normes familiales, tabou religieux) — pas un symptôme
+✓ Touche simultanément plusieurs niveaux : individu + famille + institution
+✓ Contient un mécanisme de changement comportemental durable et mesurable
+✓ Est adaptée aux spécificités socioculturelles tunisiennes (pas un copié-collé occidental)
+✓ Démontre une portée scalable au-delà d'un seul campus ou groupe
+Si l'idée ne coche pas les 5 critères, le score DOIT rester sous 85.
 
 --- FIN BENCHMARK ---
 
