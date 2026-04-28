@@ -23,10 +23,17 @@ def evaluate_feasibility_with_llm(idea_text: str, similar_solutions: list[str]) 
     
     solutions_str = "\n".join(f"- {s}" for s in similar_solutions[:3]) if similar_solutions else "Aucune solution similaire trouvée."
     
-    prompt = f"""Évalue la faisabilité technique et logistique (0-100) de cette idée dans le contexte tunisien.
+    prompt = f"""Évalue la faisabilité technique et logistique (0-100) de cette idée dans le contexte tunisien actuel.
 Idée : {idea_text[:300]}
 Preuves de faisabilité trouvées :
 {solutions_str}
+
+CONSIGNES DE SCORING :
+- Si l'idée demande des ressources financières importantes sans partenaire identifié : MAX 40.
+- Si l'idée demande un changement de loi ou de réglementation : MAX 30.
+- Si l'idée est purement numérique mais sans plan de maintenance : MAX 60.
+- Ne dépasse 80 QUE SI l'idée est déjà testée avec succès ou est extrêmement simple à mettre en place avec les moyens du bord.
+
 Réponds UNIQUEMENT avec un JSON valide (sans markdown) : {{"feasibility_score": <nombre>}}"""
 
     response = llm.invoke([HumanMessage(content=prompt)])

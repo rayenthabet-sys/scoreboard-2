@@ -20,54 +20,27 @@ PÉNALISE fortement :
 - Les idées déjà existantes sans valeur ajoutée (-25 pts)
 - Le manque de faisabilité dans le contexte tunisien (-10 pts)
 
-Utilise CES EXEMPLES comme étalon fixe pour calibrer ton impact_score ET RESPECTE la distribution attendue :
+DISTRIBUTION STRICTE :
+- 20-30 (Le "Basement") : Idées impossibles ou illogiques. Impact réel nul.
+- 40-60 (Le "Standard Etudiant") : Projets classiques. Impact limité par la réalité de l'implémentation. Plafond à 60.
+- 85-90 (L'"Industry Gold") : Niveau BetterHelp. Impact systémique massif. Plafond à 90.
 
-DISTRIBUTION OBLIGATOIRE : ~50% des idées acceptées se situent entre 20–55, ~35% entre 55–72, ~12% entre 72–84, et MOINS DE 3% au-dessus de 85. Un impact de 85+ signifie un changement culturel démontrable et systémique — c'est extrêmement rare. Si tu dépasses 75, justifie-le explicitement.
+--- BENCHMARK D'IMPACT SOCIAL ---
 
---- BENCHMARK ---
+1. LE "BASEMENT" (Score: 20-30)
+Definition: Une idée techniquement impossible ou sans logique.
+Exemple: "Un chapeau télépathique qui détecte la dépression."
+Pourquoi: Cela établit que l'impact n'est pas seulement le but (aider les gens), mais la réalité de la solution. Si la solution ne peut pas exister, son impact est de 20-30.
 
-IMPACT 15 :
-Idée : "Créer une smartwatch qui détecte le stress en temps réel."
-Pourquoi : L'impact sur la réduction du stigma est quasi nul. Mesurer le stress
-ne change pas la perception sociale de la maladie mentale. Portée très limitée,
-coût d'accès prohibitif pour le contexte tunisien.
+2. LE "STANDARD ETUDIANT" (Score: 40)
+Ancre: "Résilience Botanique" (jardin virtuel).
+Logique: C'est une bonne intention, mais l'impact social réel sur le stigma est faible car cela reste dans une bulle numérique individuelle.
+Règle d'or: Si une idée n'est qu'une version numérique d'un hobby ou un simple outil de suivi (tracking), elle ne peut pas dépasser 60 en impact.
 
-IMPACT 35 :
-Idée : "Une application mobile gratuite qui connecte les étudiants à des 
-psychologues bénévoles avec un système de matching."
-Pourquoi : L'accessibilité est réelle mais l'impact anti-stigma est indirect.
-Le matching psychologue/patient existe déjà. Pas de mécanisme de changement 
-culturel ou communautaire.
-
-IMPACT 52 :
-Idée : "Des capsules vidéo courtes (format Reels/TikTok) co-créées avec 
-des étudiants de SUP'COM et des psychologues, montrant des témoignages 
-anonymes de pairs qui ont consulté — diffusées sur les réseaux intra-campus."
-Pourquoi : Mécanisme de déstigmatisation par identification (les pairs).
-Portée réelle sur les réseaux. Mais impact limité au campus, pas de 
-mécanisme de suivi, d'évaluation ou de changement durable. Le format
-TikTok/Reels de sensibilisation est très répandu et son efficacité anti-stigma
-à long terme est discutable.
-
-IMPACT 66 :
-Idée : "Un programme de certification 'Espace Safe' pour les cafés et 
-espaces étudiants tunisiens : les gérants sont formés à l'écoute de 
-premier niveau et affichent un label visible — créant des refuges physiques 
-de décompression hors du cadre universitaire, normalisant le fait de 
-'ne pas aller bien' dans des espaces neutres."
-Pourquoi : Levier culturel pertinent (espaces non-médicaux), ancré dans le quotidien.
-Mais reste une adaptation d'un modèle existant. Impact mesuré principalement
-sur les personnes qui fréquentent déjà ces espaces — pas de mécanisme
-pour toucher les plus réticents à consulter.
-
-IMPACT 85+ — RÉSERVÉ AUX IDÉES VÉRITABLEMENT TRANSFORMATRICES (moins de 3% des soumissions) :
-Pour atteindre 85+, une idée DOIT réunir TOUS ces critères simultanément :
-✓ Adresse la cause racine du stigma (croyances culturelles, normes familiales, tabou religieux) — pas un symptôme
-✓ Touche simultanément plusieurs niveaux : individu + famille + institution
-✓ Contient un mécanisme de changement comportemental durable et mesurable
-✓ Est adaptée aux spécificités socioculturelles tunisiennes (pas un copié-collé occidental)
-✓ Démontre une portée scalable au-delà d'un seul campus ou groupe
-Si l'idée ne coche pas les 5 critères, le score DOIT rester sous 85.
+3. L'"INDUSTRY GOLD" (Score: 85-90)
+Exemple: BetterHelp ou Headspace.
+Logique: Un impact prouvé sur des millions d'utilisateurs avec des infrastructures réelles.
+Règle d'or: À moins que l'idée étudiante n'ait un mécanisme de déploiement plus concret et un impact plus systémique que BetterHelp, elle ne peut pas dépasser 90.
 
 --- FIN BENCHMARK ---
 
