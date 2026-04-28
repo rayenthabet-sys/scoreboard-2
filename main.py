@@ -55,12 +55,23 @@ def startup_event():
     create_tables()
 
 
-# ── HTML Pages ───────────────────────────────────────────────────────────────
+# ── HTML Pages & Static Files ───────────────────────────────────────────────────────────────
+
+@app.get("/logo.png", include_in_schema=False)
+def get_logo():
+    from fastapi.responses import FileResponse
+    logo_path = Path(__file__).parent / "logo.png"
+    if logo_path.exists():
+        return FileResponse(logo_path, media_type="image/png")
+    raise HTTPException(status_code=404, detail="logo.png not found")
 
 @app.get("/favicon.ico", include_in_schema=False)
-def favicon():
-    from fastapi import Response
-    return Response(status_code=204)
+def get_favicon():
+    from fastapi.responses import FileResponse
+    favicon_path = Path(__file__).parent / "favicon.ico"
+    if favicon_path.exists():
+        return FileResponse(favicon_path, media_type="image/x-icon")
+    raise HTTPException(status_code=404, detail="favicon.ico not found")
 
 @app.get("/", response_class=HTMLResponse)
 def serve_index():
