@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PACTE — Classement en Direct</title>
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
   <style>
@@ -433,8 +433,35 @@
       color: var(--muted);
     }
 
-    .submit-link { color: var(--accent); text-decoration: none; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; }
-    .submit-link:hover { opacity: 0.8; text-shadow: 0 0 8px rgba(0,255,163,0.5); }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .submit-link-top {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.4rem 0.85rem;
+      border: 1px dashed rgba(0,255,163,0.3);
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .submit-link-top:hover {
+      background: rgba(0,255,163,0.05);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(0,255,163,0.2);
+    }
 
     /* Refresh indicator */
     #refreshProgress {
@@ -1349,9 +1376,12 @@
           <h1>Classement Live</h1>
         </div>
       </div>
-      <div class="live-indicator">
-        <div class="live-dot"></div>
-        LIVE — actualisation auto
+      <div class="top-actions">
+        <a href="/" class="submit-link-top">↗ Soumettre une idée</a>
+        <div class="live-indicator">
+          <div class="live-dot"></div>
+          LIVE — actualisation auto
+        </div>
       </div>
     </div>
 
@@ -1390,7 +1420,6 @@
 
     <div class="footer">
       <span id="lastUpdated">—</span>
-      <a href="/" class="submit-link">↗ Soumettre une idée</a>
     </div>
 
   </div>
