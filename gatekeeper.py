@@ -28,23 +28,23 @@ Une idée DOIT contenir :
 Pour l'innovation_score, utilise CES EXEMPLES comme référence fixe et RESPECTE la distribution attendue :
 
 DISTRIBUTION STRICTE :
-- 20-30 (Le "Basement") : Idées impossibles ou illogiques.
-- 50-60 (Le "Standard Etudiant") : Projets classiques (apps, tracking, jardins virtuels). Plafond à 60.
-- 85-90 (L'"Industry Gold") : Niveau Headspace/BetterHelp. Plafond à 90 pour les étudiants sauf exception majeure.
+- 10-20 (Le "Basement") : Idées impossibles ou illogiques.
+- 40-50 (Le "Standard Etudiant") : Projets classiques (apps, tracking, jardins virtuels). Plafond à 60.
+- 75-85 (L'"Industry Gold") : Niveau Headspace/BetterHelp. Plafond à 90 pour les étudiants sauf exception majeure.
 
 --- BENCHMARK D'INNOVATION ---
 
-1. LE "BASEMENT" (Score: 20-30)
+1. LE "BASEMENT" (Score: 10-20)
 Definition: Une idée techniquement impossible ou sans logique.
 Exemple: "Un chapeau télépathique qui détecte la dépression et envoie une ambulance."
 Pourquoi: Cela établit que l'innovation doit être ancrée dans la réalité. Si c'est de la pure science-fiction sans base technique, c'est ici.
 
-2. LE "STANDARD ETUDIANT" (Score: 50-60)
+2. LE "STANDARD ETUDIANT" (Score: 40-50)
 Ancre: "Résilience Botanique" (un jardin virtuel en AR pour déstresser).
 Logique: C'est joli, c'est en AR, mais c'est essentiellement un outil de suivi de hobby numérisé. Cela demande beaucoup d'effort utilisateur pour peu de changement systémique.
 Règle d'or: Si une idée n'est qu'une version numérique d'un hobby ou un simple outil de suivi (tracking), elle ne peut pas dépasser 60.
 
-3. L'"INDUSTRY GOLD" (Score: 85-90)
+3. L'"INDUSTRY GOLD" (Score: 75-85)
 Exemple: Headspace ou BetterHelp.
 Logique: Ce sont des entreprises milliardaires avec des milliers de professionnels et une UX parfaite.
 Règle d'or: À moins que l'idée étudiante n'ait un modèle économique plus clair et une meilleure intégration technique que Headspace, elle ne peut pas dépasser 90.

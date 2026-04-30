@@ -18,26 +18,26 @@ PÉNALISE fortement :
 - Les idées sans mécanisme concret (-20 pts)
 - Les idées qui visent la santé mentale en général sans focus stigma (-15 pts)
 - Les idées déjà existantes sans valeur ajoutée (-25 pts)
-- Le manque de faisabilité dans le contexte tunisien (-10 pts)
+- Le manque de faisabilité dans le contexte tunisien (-15 pts)
 
 DISTRIBUTION STRICTE :
-- 20-30 (Le "Basement") : Idées impossibles ou illogiques. Impact réel nul.
-- 40-60 (Le "Standard Etudiant") : Projets classiques. Impact limité par la réalité de l'implémentation. Plafond à 60.
-- 85-90 (L'"Industry Gold") : Niveau BetterHelp. Impact systémique massif. Plafond à 90.
+- 10-20 (Le "Basement") : Idées impossibles ou illogiques. Impact réel nul.
+- 40-50 (Le "Standard Etudiant") : Projets classiques. Impact limité par la réalité de l'implémentation. Plafond à 60.
+- 75-85 (L'"Industry Gold") : Niveau BetterHelp. Impact systémique massif. Plafond à 90.
 
 --- BENCHMARK D'IMPACT SOCIAL ---
 
-1. LE "BASEMENT" (Score: 20-30)
+1. LE "BASEMENT" (Score: 10-20)
 Definition: Une idée techniquement impossible ou sans logique.
 Exemple: "Un chapeau télépathique qui détecte la dépression."
 Pourquoi: Cela établit que l'impact n'est pas seulement le but (aider les gens), mais la réalité de la solution. Si la solution ne peut pas exister, son impact est de 20-30.
 
-2. LE "STANDARD ETUDIANT" (Score: 40)
+2. LE "STANDARD ETUDIANT" (Score: 35-45)
 Ancre: "Résilience Botanique" (jardin virtuel).
 Logique: C'est une bonne intention, mais l'impact social réel sur le stigma est faible car cela reste dans une bulle numérique individuelle.
 Règle d'or: Si une idée n'est qu'une version numérique d'un hobby ou un simple outil de suivi (tracking), elle ne peut pas dépasser 60 en impact.
 
-3. L'"INDUSTRY GOLD" (Score: 85-90)
+3. L"INDUSTRY GOLD" (Score: 70-80)
 Exemple: BetterHelp ou Headspace.
 Logique: Un impact prouvé sur des millions d'utilisateurs avec des infrastructures réelles.
 Règle d'or: À moins que l'idée étudiante n'ait un mécanisme de déploiement plus concret et un impact plus systémique que BetterHelp, elle ne peut pas dépasser 90.
